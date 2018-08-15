@@ -1,0 +1,18 @@
+version: '3'
+services:
+  mariadb-columnstore:
+    image: mariadb/columnstore_singlenode:1.1.5
+    ports:
+      - "3306:3306"
+    # volumes:
+    #   - ./volume/mariadb-columnstore/etc/Columnstore.xml:/usr/local/mariadb/columnstore/etc/Columnstore.xml
+    #   - ./volume/mariadb-columnstore/data1:/usr/local/mariadb/columnstore/data1
+    #   - ./volume/mariadb-columnstore/local:/usr/local/mariadb/columnstore/local
+    #   - ./volume/mariadb-columnstore/db:/usr/local/mariadb/columnstore/mysql/db
+
+  mariadb-standard:
+    image: mariadb:10.3.8
+    environment:
+      MYSQL_ROOT_PASSWORD: ''
+    ports:
+      - "3307:3306"
