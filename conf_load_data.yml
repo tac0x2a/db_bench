@@ -12,6 +12,8 @@ in:
     skip_header_lines: 1
     allow_extra_columns: false
     allow_optional_columns: false
+    # column_options:
+    #   create_at: {type: DATETIME, value_type: DATETIME}
     columns:
     - {name: uid, type: long}
     - {name: name, type: string}
@@ -19,5 +21,6 @@ in:
     - {name: address, type: string}
     - {name: color, type: string}
     - {name: create_at, type: timestamp, format: '%Y-%m-%d %H:%M:%S'}
-out: {type: mysql, host: 127.0.0.1, user: root, password: '', database: db_bench,
-  table: bench, mode: replace}
+
+out: {type: mysql, host: 127.0.0.1, port: 3306, user: root, password: '', database: db_bench,
+  table: bench, create_table_option: engine=Columnstore, mode: insert}
