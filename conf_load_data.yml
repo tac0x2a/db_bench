@@ -1,0 +1,23 @@
+in:
+  type: file
+  path_prefix: ./bench.csv
+  parser:
+    charset: UTF-8
+    newline: CRLF
+    type: csv
+    delimiter: ','
+    quote: '"'
+    escape: '"'
+    trim_if_not_quoted: false
+    skip_header_lines: 1
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+    - {name: uid, type: long}
+    - {name: name, type: string}
+    - {name: code, type: string}
+    - {name: address, type: string}
+    - {name: color, type: string}
+    - {name: create_at, type: timestamp, format: '%Y-%m-%d %H:%M:%S'}
+out: {type: mysql, host: 127.0.0.1, user: root, password: '', database: db_bench,
+  table: bench, mode: replace}

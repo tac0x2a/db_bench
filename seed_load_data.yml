@@ -1,0 +1,12 @@
+in:
+  type: file
+  path_prefix: "./bench.csv"
+
+out:
+  type: mysql # embulk gem install embulk-output-mysql
+  host: 127.0.0.1
+  user: root
+  password: ''
+  database: db_bench
+  table: bench
+  mode: replace
