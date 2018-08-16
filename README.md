@@ -1,7 +1,21 @@
 # db_bench
 
+# Start DBs
+```
+$ docker-compose up
+```
 
-create table for ColumnStore
+# Load data by Embulk
+After start DBs,
+
+```
+$ ./embulk run conf_load_data_mariadb.yml
+$ ./embulk run conf_load_data_mariadb_mcs.yml
+```
+
+# misc
+## create table for MariaDB ColumnStore example
+
 ```sql
 CREATE TABLE `bench` (
   `uid` bigint(20) DEFAULT NULL,

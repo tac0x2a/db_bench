@@ -1,0 +1,38 @@
+
+# ./embulk run conf_load_data_mariadb_mcs.yml
+
+in:
+  type: file
+  path_prefix: ./bench.csv
+  parser:
+    charset: UTF-8
+    newline: CRLF
+    type: csv
+    delimiter: ','
+    quote: '"'
+    escape: '"'
+    trim_if_not_quoted: false
+    skip_header_lines: 1
+    allow_extra_columns: false
+    allow_optional_columns: false
+    columns:
+    - {name: uid, type: long}
+    - {name: name, type: string}
+    - {name: code, type: string}
+    - {name: address, type: string}
+    - {name: color, type: string}
+    - {name: create_at, type: timestamp, format: '%Y-%m-%d %H:%M:%S'}
+
+out:
+  type: mysql
+  host: 127.0.0.1
+  port: 3306
+  user: root
+  password: ''
+  database: db_bench
+  table: bench
+  create_table_option: engine=Columnstore
+  mode: replace
+  # before_load: "CREATE DATABASE IF NOT EXISTS db_bench"  # This query does not be executed before create table.
+  column_options:
+    create_at: {type: DATETIME}
