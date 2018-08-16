@@ -4,15 +4,41 @@ services:
     image: mariadb/columnstore_singlenode:1.1.5
     ports:
       - "3306:3306"
-    # volumes:
-    #   - ./volume/mariadb-columnstore/etc/Columnstore.xml:/usr/local/mariadb/columnstore/etc/Columnstore.xml
-    #   - ./volume/mariadb-columnstore/data1:/usr/local/mariadb/columnstore/data1
-    #   - ./volume/mariadb-columnstore/local:/usr/local/mariadb/columnstore/local
-    #   - ./volume/mariadb-columnstore/db:/usr/local/mariadb/columnstore/mysql/db
-
-  mariadb-standard:
-    image: mariadb:10.3.8
+    volumes:
+      - ./volume/mariadb-cs/etc:/usr/local/mariadb/columnstore/etc
+      - ./volume/mariadb-cs/data1:/usr/local/mariadb/columnstore/data1
+      - ./volume/mariadb-cs/local:/usr/local/mariadb/columnstore/local
+      - ./volume/mariadb-cs/db:/usr/local/mariadb/columnstore/mysql/db
     environment:
-      MYSQL_ROOT_PASSWORD: 'password'
-    ports:
-      - "3307:3306"
+      CS_DATABASE: db_bench
+
+  # mariadb-standard:
+  #   image: mariadb:10.3.8
+  #   volumes:
+  #     - ./volume/mariadb-standard/mysql:/var/lib/mysql
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: 'password'
+  #   ports:
+  #     - "3307:3306"
+
+# volumes:
+#   mcs-etc:
+#     driver_opts:
+#       type: none
+#       device: ./volume/mariadb-columnstore/etc
+#       o: bind
+#   mcs-data1:
+#     driver_opts:
+#       type: none
+#       device: ./volume/mariadb-columnstore/data1
+#       o: bind
+#   mcs-local:
+#     driver_opts:
+#       type: none
+#       device: ./volume/mariadb-columnstore/local
+#       o: bind
+#   mcs-db:
+#     driver_opts:
+#       type: none
+#       device: ./volume/mariadb-columnstore/db
+#       o: bind
