@@ -1,5 +1,19 @@
 version: '3'
 services:
+
+  # client:
+  #   image: yandex/clickhouse-client
+  #   build: docker/client
+  #   command: ['--host', 'server']
+  clickhouse-server:
+    image: yandex/clickhouse-server
+    ports:
+      - 8123:8123
+      - "9000:9000"
+      - "9009:9009"
+    volumes:
+      - ./volume/clickhouse:/var/lib/clickhouse
+
   mariadb-columnstore:
     image: mariadb/columnstore_singlenode:1.1.5
     ports:
