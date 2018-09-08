@@ -1,12 +1,17 @@
 version: '3'
 services:
 
+  # ClickHouse : 8123
+  # MariaDB CS : 3306
+  # MariaDB    : 3307
+  # PostgreSQL : 5432
+
   # client:
   #   image: yandex/clickhouse-client
   #   build: docker/client
   #   command: ['--host', 'server']
   clickhouse-server:
-    image: yandex/clickhouse-server
+    image: yandex/clickhouse-server:18.10
     ports:
       - 8123:8123
       - "9000:9000"
@@ -14,45 +19,34 @@ services:
     volumes:
       - ./volume/clickhouse:/var/lib/clickhouse
 
-  mariadb-columnstore:
-    image: mariadb/columnstore_singlenode:1.1.5
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./volume/mariadb-cs/etc:/usr/local/mariadb/columnstore/etc
-      - ./volume/mariadb-cs/data1:/usr/local/mariadb/columnstore/data1
-      - ./volume/mariadb-cs/local:/usr/local/mariadb/columnstore/local
-      - ./volume/mariadb-cs/db:/usr/local/mariadb/columnstore/mysql/db
-    environment:
-      CS_DATABASE: db_bench
-
-  # mariadb-standard:
-  #   image: mariadb:10.3.8
-  #   volumes:
-  #     - ./volume/mariadb-standard/mysql:/var/lib/mysql
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: 'password'
+  # mariadb-columnstore:
+  #   image: mariadb/columnstore_singlenode:1.1.5
   #   ports:
-  #     - "3307:3306"
+  #     - "3306:3306"
+  #   volumes:
+  #     - ./volume/mariadb-cs/etc:/usr/local/mariadb/columnstore/etc
+  #     - ./volume/mariadb-cs/data1:/usr/local/mariadb/columnstore/data1
+  #     - ./volume/mariadb-cs/local:/usr/local/mariadb/columnstore/local
+  #     - ./volume/mariadb-cs/db:/usr/local/mariadb/columnstore/mysql/db
+  #   environment:
+  #     CS_DATABASE: db_bench
 
-# volumes:
-#   mcs-etc:
-#     driver_opts:
-#       type: none
-#       device: ./volume/mariadb-columnstore/etc
-#       o: bind
-#   mcs-data1:
-#     driver_opts:
-#       type: none
-#       device: ./volume/mariadb-columnstore/data1
-#       o: bind
-#   mcs-local:
-#     driver_opts:
-#       type: none
-#       device: ./volume/mariadb-columnstore/local
-#       o: bind
-#   mcs-db:
-#     driver_opts:
-#       type: none
-#       device: ./volume/mariadb-columnstore/db
-#       o: bind
+  mariadb-standard:
+    image: mariadb:10.3.8
+    volumes:
+      - ./volume/mariadb-standard/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - "3307:3306"
+
+  postgresql:
+    image: postgres:10.5-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'password'
+
+    volumes:
+      - ./volume/postgresql/data:/var/lib/postgresql/data
