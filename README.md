@@ -4,13 +4,13 @@
 
 #### Before
 ```sh
-$ du -h volume/clickhouse | tail -1
+% du -h volume/clickhouse | tail -1
 860K    volume/clickhouse
 
-$ du -h volume/postgresql | tail -1
+% du -h volume/postgresql | tail -1
  79M    volume/postgresql
 
-$ du -h volume/mariadb-standard | tail -1
+% du -h volume/mariadb-standard | tail -1
 128M    volume/mariadb-standard
 ```
 
@@ -24,6 +24,14 @@ $ du -h data/test_100000000.csv
 
 # Load test_100000000.csv to tables by DBeaver...
 
+% du -h volume/clickhouse | tail -1
+8.6G    volume/clickhouse
+
+% du -h volume/postgresql | tail -1
+ 16G    volume/postgresql
+
+% du -h volume/mariadb-standard | tail -1
+ 15G    volume/mariadb-standard
 ```
 
 
@@ -48,7 +56,7 @@ $ ./generate_testdata.py 1000 -o 1000raws_testdata.csv
   -- DROP TABLE db_bench.bench
 
   CREATE TABLE db_bench.bench (
-  	uid int8 NULL,
+  	uid bigint NULL,
   	"name" varchar(2048) NULL,
   	code varchar(2048) NULL,
   	address varchar(2048) NULL,
