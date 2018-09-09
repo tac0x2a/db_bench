@@ -1,10 +1,10 @@
 version: '3'
 services:
 
-  # ClickHouse : 8123
+  # ClickHouse : 8123 # none / none
   # MariaDB CS : 3306
-  # MariaDB    : 3307
-  # PostgreSQL : 5432
+  # MariaDB    : 3307 # root/password
+  # PostgreSQL : 5432 # postgres/password
 
   # client:
   #   image: yandex/clickhouse-client
@@ -47,6 +47,5 @@ services:
     environment:
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'password'
-
     volumes:
       - ./volume/postgresql/data:/var/lib/postgresql/data
