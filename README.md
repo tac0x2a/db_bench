@@ -34,6 +34,18 @@ $ du -h data/test_100000000.csv
  15G    volume/mariadb-standard
 ```
 
+### Query
+```
+SELECT COUNT(0) FROM db_bench.bench_large;
+-- ClickHouse:         0m  2.23s
+-- MariaDB-Standard:  13m 19s
+-- PostgreSQL      :   5m 47s
+
+SELECT COUNT(0), color  FROM db_bench.bench_large GROUP BY color;
+-- ClickHouse:         0m  5.373s
+-- MariaDB-Standard:
+-- PostgreSQL      :
+```
 
 # How To Run Benchmark
 ## 1. Start DBs
