@@ -40,12 +40,27 @@ SELECT COUNT(0) FROM db_bench.bench_large;
 -- ClickHouse:         0m  2.23s
 -- MariaDB-Standard:  13m 19s
 -- PostgreSQL      :   5m 47s
+```
 
+```
 SELECT COUNT(0), color  FROM db_bench.bench_large GROUP BY color;
--- ClickHouse:         0m  5.373s
+-- ClickHouse:       0m  5.373s
 -- MariaDB-Standard:
 -- PostgreSQL      :
 ```
+
+```
+SELECT count(*) FROM (select * from db_bench.bench) as a ALL INNER JOIN (select * from db_bench.bench_large) USING color
+-- ClickHouse      : 0m  52.513s
+-- MariaDB-Standard: None
+-- PostgreSQL      : None
+```
+
+Command for query execution by clickhouse-client
+```
+docker run yandex/clickhouse-client -h <hostname> -q '<query>' --time
+```
+
 
 # How To Run Benchmark
 ## 1. Start DBs
