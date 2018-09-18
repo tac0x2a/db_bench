@@ -1,4 +1,4 @@
-# db_bench
+# Benchmark of column store DBs
 ## Result
 ### Storage
 
@@ -146,3 +146,8 @@ $ ./generate_testdata.py 1000 -o 1000raws_testdata.csv
 
 ### 3.2. Load csv to table
 Load csv for each DB. Recommended: [DBeaver](https://dbeaver.io/) is able to load csv to table by GUI.
+
+# Etc
+## TABiX - http://localhost:80
+GUI Client for ClickHouse.
+![](https://tabix.io/anime/SQL_Editor.gif)

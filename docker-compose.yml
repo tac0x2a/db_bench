@@ -2,6 +2,7 @@ version: '3'
 services:
 
   # ClickHouse : 8123 # none / none
+  # TABiX for ClickHouse client: http://localhost:8080
   # MariaDB CS : 3306
   # MariaDB    : 3307 # root/password
   # PostgreSQL : 5432 # postgres/password
@@ -14,10 +15,17 @@ services:
     image: yandex/clickhouse-server:18.10
     ports:
       - 8123:8123
-      - "9000:9000"
-      - "9009:9009"
+      - 9000:9000
+      - 9009:9009
     volumes:
       - ./volume/clickhouse:/var/lib/clickhouse
+
+  clickhouse-tabix:
+    image: spoonest/clickhouse-tabix-web-client:stable
+    ports:
+      - 8080:80
+    environment:
+      CH_HOST: clickhouse-server:8123
 
   # mariadb-columnstore:
   #   image: mariadb/columnstore_singlenode:1.1.5
