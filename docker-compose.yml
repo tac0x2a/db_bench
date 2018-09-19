@@ -3,6 +3,7 @@ services:
 
   # ClickHouse : 8123 # none / none
   # TABiX for ClickHouse client: http://localhost:8080
+  # OmniDB     : 8000 # admin/admin
   # MariaDB CS : 3306
   # MariaDB    : 3307 # root/password
   # PostgreSQL : 5432 # postgres/password
@@ -26,6 +27,12 @@ services:
       - 8080:80
     environment:
       CH_HOST: clickhouse-server:8123
+
+  omnidb:
+    image: wiremind/omnidb:2.10.0
+    ports:
+      - 8000:8000
+      - 25482:25482
 
   # mariadb-columnstore:
   #   image: mariadb/columnstore_singlenode:1.1.5
