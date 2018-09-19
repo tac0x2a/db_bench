@@ -99,7 +99,7 @@ $ ./generate_testdata.py 1000 -o 1000raws_testdata.csv
 
   -- DROP TABLE db_bench.bench
 
-  CREATE TABLE `db_bench.bench` (
+  CREATE TABLE db_bench.bench (
     `uid` bigint(20) unsigned DEFAULT NULL,
     `name` varchar(2048) DEFAULT NULL,
     `code` varchar(2048) DEFAULT NULL,
@@ -148,7 +148,7 @@ $ ./generate_testdata.py 1000 -o 1000raws_testdata.csv
 Load csv for each DB. Recommended: [DBeaver](https://dbeaver.io/) is able to load csv to table by GUI.
 
 # etc...
-## TABiX - http://localhost:80
+## TABiX - http://localhost:8080
 GUI Client for ClickHouse.
 
 ## OMNIDB - http://localhost:8000
