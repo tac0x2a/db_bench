@@ -29,7 +29,7 @@ csv_file  = vars(args)['o']
 print('row_count:{}'.format(row_count))
 print('destination:{}'.format(csv_file))
 
-with open(csv_file, 'w') as f:
+with open(csv_file, 'w', encoding='UTF-8', newline='\n') as f:
     import csv
     writer = csv.writer(f)
     write_rows(writer, row_count)
