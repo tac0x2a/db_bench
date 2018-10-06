@@ -7,6 +7,8 @@ services:
   # MariaDB CS : 3306 # root/password
   # MariaDB    : 3307 # root/password
   # PostgreSQL : 5432 # postgres/password
+  # Nifi       : 8081
+  # Pentabo    : 8082
 
   # client:
   #   image: yandex/clickhouse-client
@@ -27,6 +29,15 @@ services:
       - 8080:80
     environment:
       CH_HOST: clickhouse-server:8123
+
+  nifi:
+    image: apache/nifi:1.7.1
+    ports:
+      - 8081:8080
+  pentaho:
+    image: wmarinho/pentaho-biserver:6.1
+    ports:
+      - 8082:8080
 
   # omnidb:
   #   image: wiremind/omnidb:2.10.0
