@@ -154,6 +154,12 @@ GUI Client for ClickHouse.
 ## OMNIDB - http://localhost:8000
 GUI Client for PostgreSQL and Maria DB
 
+## Nifi - http://localhost:8081
+Web based ETL tool.
+
+## Pentaho - http://localhost:8082
+Web based ETL tool.
+
 ## ClickHouse DataType Test
 ```sql
 DROP TABLE db_bench.type_test;
