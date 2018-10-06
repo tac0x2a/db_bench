@@ -10,14 +10,17 @@
 #   url: jdbc:clickhouse://127.0.0.1:8123/db_bench
 #   query: SELECT * from bench
 
+# Now, you can use clickhouse input on jdbc just install `embulk-input-clickhouse` plugin.
 in:
   type: clickhouse
-  driver_path: ./lib/clickhouse-jdbc-0.1-SNAPSHOT.jar
   database: db_bench
+  # driver_path: ./lib/clickhouse-jdbc-exp-0.1.42.jar
   host: 127.0.0.1
-  table: bench_large
-  select: count(*)
-  where: uid > 100000 and uid < 800000 and address LIKE '滋賀%'
+  # connect_timeout: 300
+  socket_timeout:  1000000
+  query: SELECT * from db_bench.type_test
+  column_options:
+    ui64: {type: string}
 
 # out:
 #   type: jdbc
