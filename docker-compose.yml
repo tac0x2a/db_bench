@@ -4,7 +4,7 @@ services:
   # ClickHouse : 8123 # none / none
   # TABiX for ClickHouse client: http://localhost:8080
   # OmniDB     : 8000 # admin/admin
-  # MariaDB CS : 3306
+  # MariaDB CS : 3306 # root/password
   # MariaDB    : 3307 # root/password
   # PostgreSQL : 5432 # postgres/password
 
@@ -28,33 +28,33 @@ services:
     environment:
       CH_HOST: clickhouse-server:8123
 
-  omnidb:
-    image: wiremind/omnidb:2.10.0
-    ports:
-      - 8000:8000
-      - 25482:25482
-
+  # omnidb:
+  #   image: wiremind/omnidb:2.10.0
+  #   ports:
+  #     - 8000:8000
+  #     - 25482:25482
+  #
   # mariadb-columnstore:
   #   image: mariadb/columnstore_singlenode:1.1.5
   #   ports:
   #     - "3306:3306"
-  #   volumes:
-  #     - ./volume/mariadb-cs/etc:/usr/local/mariadb/columnstore/etc
-  #     - ./volume/mariadb-cs/data1:/usr/local/mariadb/columnstore/data1
-  #     - ./volume/mariadb-cs/local:/usr/local/mariadb/columnstore/local
-  #     - ./volume/mariadb-cs/db:/usr/local/mariadb/columnstore/mysql/db
+    # volumes:
+    #   - ./volume/mariadb-cs/etc:/usr/local/mariadb/columnstore/etc
+    #   - ./volume/mariadb-cs/data1:/usr/local/mariadb/columnstore/data1
+    #   - ./volume/mariadb-cs/local:/usr/local/mariadb/columnstore/local
+    #   - ./volume/mariadb-cs/db:/usr/local/mariadb/columnstore/mysql/db
   #   environment:
   #     CS_DATABASE: db_bench
-
-  mariadb-standard:
-    image: mariadb:10.3.8
-    volumes:
-      - ./volume/mariadb-standard/mysql:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: 'password'
-    ports:
-      - "3307:3306"
-
+  #
+  # mariadb-standard:
+  #   image: mariadb:10.3.8
+  #   volumes:
+  #     - ./volume/mariadb-standard/mysql:/var/lib/mysql
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: 'password'
+  #   ports:
+  #     - "3307:3306"
+  #
   postgresql:
     image: postgres:10.5-alpine
     ports:

@@ -153,3 +153,57 @@ GUI Client for ClickHouse.
 
 ## OMNIDB - http://localhost:8000
 GUI Client for PostgreSQL and Maria DB
+
+## ClickHouse DataType Test
+```sql
+DROP TABLE db_bench.type_test;
+
+CREATE TABLE db_bench.type_test (
+  `uid` UInt64,
+  `i8` Int8,
+  `i16` Int16,
+  `i32` Int32,
+  `i64` Int64,
+  `ui8` UInt8,
+  `ui16` UInt16,
+  `ui32` UInt32,
+  `ui64` UInt64,
+  `f32` Float32,
+  `f64` Float64,
+  --`Decimal32` Decimal(10,2),
+  `s` String,
+  `fs32` FixedString(32),
+  `d` Date,
+  `dt` DateTime,
+  `e8` Enum8('hello' = 1, 'world' = 2),
+  `ai32` Array(Int32),
+  `astr` Array(String),
+  `t_i32_s` Tuple(Int32, String),
+  `create_at` DateTime
+) ENGINE = MergeTree() ORDER BY uid PARTITION BY toYYYYMM(create_at);
+
+INSERT INTO db_bench.type_test (
+	uid, i8, i16, i32, i64, ui8, ui16, ui32, ui64,
+	f32, f64, s, fs32, d, dt,
+	e8, ai32, astr, t_i32_s,
+	create_at
+) VALUES (
+	1, -128, -32768, -2147483648, -9223372036854775808, 0, 0, 0, 0,
+	1.1, 2.2, 'string', 'fixed_string32', '2018-09-30', '2018-10-01 12:34:56',
+	'hello', [1,2,3], ['string4', 'string5'], tuple(1, 'tuple_string'),
+	'2018-10-02 12:34:56'
+);
+INSERT INTO db_bench.type_test (
+	uid, i8, i16, i32, i64, ui8, ui16, ui32, ui64,
+	f32, f64, s, fs32, d, dt,
+	e8, ai32, astr, t_i32_s,
+	create_at
+) VALUES (
+	2, 127, 32767, 2147483647, 9223372036854775807, 255, 65535, 4294967295, 18446744073709551615,
+	-1.0/0, 1.0/0, 'string', 'fixed_string32', '2018-09-30', '2018-10-01 12:34:56',
+	'hello', [1,2,3], ['string4', 'string5'], tuple(1, 'tuple_string'),
+	'2018-10-02 12:34:56'
+);
+
+select * from  db_bench.type_test;
+```
