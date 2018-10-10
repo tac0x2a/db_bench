@@ -60,7 +60,7 @@ services:
   # mariadb-standard:
   #   image: mariadb:10.3.8
   #   volumes:
-  #     - mariadb-standard/mysql:/var/lib/mysql
+  #     - mariadb-standard:/var/lib/mysql
   #   environment:
   #     MYSQL_ROOT_PASSWORD: 'password'
   #   ports:
