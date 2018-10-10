@@ -1,10 +1,10 @@
 version: '3'
 services:
 
-  # ClickHouse : 8123 # none / none
+  # ClickHouse : 8123 # <none> / <none>
   # TABiX for ClickHouse client: http://localhost:8080
   # OmniDB     : 8000 # admin/admin
-  # MariaDB CS : 3306 # root/password
+  # MariaDB CS : 3306 # root/ <none>
   # MariaDB    : 3307 # root/password
   # PostgreSQL : 5432 # postgres/password
   # Nifi       : 8081
@@ -23,21 +23,21 @@ services:
     volumes:
       - ./volume/clickhouse:/var/lib/clickhouse
 
-  clickhouse-tabix:
-    image: spoonest/clickhouse-tabix-web-client:stable
-    ports:
-      - 8080:80
-    environment:
-      CH_HOST: clickhouse-server:8123
+  # clickhouse-tabix:
+  #   image: spoonest/clickhouse-tabix-web-client:stable
+  #   ports:
+  #     - 8080:80
+  #   environment:
+  #     CH_HOST: clickhouse-server:8123
 
-  nifi:
-    image: apache/nifi:1.7.1
-    ports:
-      - 8081:8080
-  pentaho:
-    image: wmarinho/pentaho-biserver:6.1
-    ports:
-      - 8082:8080
+  # nifi:
+  #   image: apache/nifi:1.7.1
+  #   ports:
+  #     - 8081:8080
+  # pentaho:
+  #   image: wmarinho/pentaho-biserver:6.1
+  #   ports:
+  #     - 8082:8080
 
   # omnidb:
   #   image: wiremind/omnidb:2.10.0
@@ -45,33 +45,42 @@ services:
   #     - 8000:8000
   #     - 25482:25482
   #
-  # mariadb-columnstore:
-  #   image: mariadb/columnstore_singlenode:1.1.5
-  #   ports:
-  #     - "3306:3306"
-    # volumes:
-    #   - ./volume/mariadb-cs/etc:/usr/local/mariadb/columnstore/etc
-    #   - ./volume/mariadb-cs/data1:/usr/local/mariadb/columnstore/data1
-    #   - ./volume/mariadb-cs/local:/usr/local/mariadb/columnstore/local
-    #   - ./volume/mariadb-cs/db:/usr/local/mariadb/columnstore/mysql/db
-  #   environment:
-  #     CS_DATABASE: db_bench
-  #
+  mariadb-cs:
+    image: mariadb/columnstore_singlenode:1.1.5
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb-cs-etc:/usr/local/mariadb/columnstore/etc
+      - mariadb-cs-data1:/usr/local/mariadb/columnstore/data1
+      - mariadb-cs-local:/usr/local/mariadb/columnstore/local
+      - mariadb-cs-db:/usr/local/mariadb/columnstore/mysql/db
+    environment:
+      CS_DATABASE: db_bench
+
   # mariadb-standard:
   #   image: mariadb:10.3.8
   #   volumes:
-  #     - ./volume/mariadb-standard/mysql:/var/lib/mysql
+  #     - mariadb-standard/mysql:/var/lib/mysql
   #   environment:
   #     MYSQL_ROOT_PASSWORD: 'password'
   #   ports:
   #     - "3307:3306"
   #
-  postgresql:
-    image: postgres:10.5-alpine
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'password'
-    volumes:
-      - ./volume/postgresql/data:/var/lib/postgresql/data
+  # postgresql:
+  #   image: postgres:10.5-alpine
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     POSTGRES_USER: 'postgres'
+  #     POSTGRES_PASSWORD: 'password'
+  #   volumes:
+  #     - postgresql-data:/var/lib/postgresql/data
+
+volumes:
+  clickhouse:  {driver_opts:{ type: none, device: "${PWD}/volume/clickhouse", o: bind }}
+  mariadb-cs-etc: {driver_opts:{ type: none, device: "${PWD}/volume/mariadb-cs/etc", o: bind }}
+  mariadb-cs-data1: {driver_opts:{ type: none, device: "${PWD}/volume/mariadb-cs/data1", o: bind }}
+  mariadb-cs-local: {driver_opts:{ type: none, device: "${PWD}/volume/mariadb-cs/local", o: bind }}
+  mariadb-cs-db: {driver_opts:{ type: none, device: "${PWD}/volume/mariadb-cs/db", o: bind }}
+  mariadb-standard: {driver_opts:{ type: none, device: "${PWD}/volume/mariadb-standard", o: bind }}
+  postgresql-data:  {driver_opts:{ type: none, device: "${PWD}/volume/postgresql/data", o: bind }}
