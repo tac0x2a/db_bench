@@ -63,6 +63,12 @@ docker run yandex/clickhouse-client -h <hostname> -q '<query>' --time
 
 
 # How To Run Benchmark
+## 0. Initialize volumes
+```
+$ chmod +x init.sh
+$ ./init.sh
+```
+
 ## 1. Start DBs
 ```
 $ docker-compose up
