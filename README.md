@@ -133,6 +133,13 @@ $ ./generate_testdata.py 1000 -o 1000raws_testdata.csv
   ) ENGINE=ColumnStore DEFAULT CHARSET=latin1;
   ```
 
+  Fix `DirectIO` in `volume/mariadb-cs/etc/Columnstore.xml` if CREATE TABLE failed.
+  ```diff
+  - <DirectIO>y</DirectIO>
+  + <DirectIO>n</DirectIO>
+  ```
+
+
 + ClickHouse
   ```sql
   CREATE DATABASE db_bench;
