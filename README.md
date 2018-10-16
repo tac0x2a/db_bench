@@ -130,7 +130,7 @@ $ ./generate_testdata.py 1000 -o 1000raws_testdata.csv
     `color` text DEFAULT NULL,
     `random` text DEFAULT NULL,
     `create_at` datetime DEFAULT null
-  ) ENGINE=ColumnStore DEFAULT CHARSET=latin1;
+  ) ENGINE=ColumnStore DEFAULT CHARSET=utf8;
   ```
 
   Fix `DirectIO` in `volume/mariadb-cs/etc/Columnstore.xml` if CREATE TABLE failed.
